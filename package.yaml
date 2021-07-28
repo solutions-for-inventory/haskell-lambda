@@ -1,0 +1,35 @@
+name:                haskell-lambda
+version:             0.1.0
+github:              "githubuser/haskell-lambda"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2021 Author name here"
+
+description:         Please see the README on GitHub at <https://github.com/githubuser/haskell-lambda#readme>
+
+dependencies:
+- base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
+- aws-lambda-haskell-runtime >= 4.0.0
+- aeson
+
+library:
+  source-dirs: src
+
+executables:
+  bootstrap:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -O2
+    - -with-rtsopts=-N
+    dependencies:
+    - haskell-lambda
+
+default-extensions:
+  - RecordWildCards
+  - OverloadedLists
+  - OverloadedStrings
+  - DeriveGeneric

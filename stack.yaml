@@ -1,0 +1,10 @@
+resolver: lts-17.13
+
+packages:
+- .
+
+extra-deps:
+- aws-lambda-haskell-runtime-4.1.1
+#- git: https://github.com/dnikolovv/aws-lambda-haskell-runtime.git
+#  commit: 3a9d26dee8a39fdbe7bd26bc0ec058f904cdf828
+- safe-exceptions-checked-0.1.0
