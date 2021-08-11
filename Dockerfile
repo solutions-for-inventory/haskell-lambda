@@ -23,7 +23,7 @@ ENTRYPOINT sh
 
 #build deployable docker image
 FROM public.ecr.aws/lambda/provided:al2 as deploy
-
+RUN yum install -y postgresql-devel
 ARG EXECUTABLE_NAME
 ARG OUTPUT_DIR
 
@@ -37,3 +37,4 @@ RUN ls
 CMD [ "handler" ]
 
 #curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"personName": "Jorge", "personAge": 30}'
+#curl -XPOST "http://192.168.99.100:9000/2015-03-31/functions/function/invocations" -d '{"personName": "Jorge", "personAge": 30}'
