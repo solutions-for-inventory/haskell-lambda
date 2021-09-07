@@ -17,14 +17,17 @@ module Graphql.Admin.Person (
 --                , getPersonByIdResolver
                 ) where
 
+import Models
 import Control.Monad.Trans.Class (lift)
-import Database.Persist.Sql (toSqlKey, fromSqlKey)
+--import Database.Persist.Sql (toSqlKey, fromSqlKey)
+import Database.Persist.Postgresql(getJustEntity, toSqlKey)
 import qualified Database.Esqueleto      as E
 import Database.Esqueleto      ((^.), (%), (++.){-, (?.), notIn, in_-})
 import Prelude as P hiding (zip)
 import Graphql.Utils
 import Graphql.Admin.DataTypes
-
+import Control.Monad.Trans.Class (MonadTrans)
+import Data.Typeable
 -- Query Resolvers
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
 personResolver _ = pure Persons { person = getPersonByIdResolver_
@@ -33,14 +36,15 @@ personResolver _ = pure Persons { person = getPersonByIdResolver_
                                 }
 
 --getPersonByIdResolver_ :: forall (o :: * -> (* -> *) -> * -> *).(Typeable o, MonadTrans (o ())) => EntityIdArg -> o () Handler (Person o)
-getPersonByIdResolver_ EntityIdArg {..} = lift $ do
+--getPersonByIdResolver_ :: Monad IO => EntityIdArg -> IO Person
+getPersonByIdResolver_ EntityIdArg {..} = do
 --                                      let personEntityId = (toSqlKey $ fromIntegral $ entityId)::Person_Id
 --                                      person <- runDB $ getJustEntity personEntityId
                                       return $ toPersonQL
 
 --getPersonByIdResolver :: forall (o :: * -> (* -> *) -> * -> *).(Typeable o, MonadTrans (o ())) => Person_Id -> () -> o () Handler (Person o)
 getPersonByIdResolver personId _ = lift $ do
---                                      person <- runDB $ getJustEntity personId
+                                      person <- runDB $ getJustEntity personId
                                       return $ toPersonQL
 
 --pagePersonResolver :: (Typeable o, MonadTrans t, MonadTrans (o ())) => PageArg -> t Handler (Page (Person o))

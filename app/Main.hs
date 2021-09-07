@@ -2,9 +2,12 @@ module Main where
 
 import Aws.Lambda
 import qualified Lib
+--import Init (runAppDevel)
+import Models (migrateDB)
 
 main :: IO ()
-main =
+main = do
+  migrateDB
   runLambdaHaskellRuntime
     defaultDispatcherOptions
     (pure ())
