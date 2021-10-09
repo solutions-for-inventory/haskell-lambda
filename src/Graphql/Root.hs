@@ -29,24 +29,24 @@ import           Graphql.Admin.Person
 
 data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
 --                           persons :: () -> Res () IO (Persons Res)
-                           persons :: () -> m (Persons Res)
+                          persons :: () -> m (Persons m)
                          } deriving (Generic, GQLType)
 
-data Mutation m = Mutation { persons :: () -> MutRes () IO (Persons MutRes)
-                           } deriving (Generic, GQLType)
+--data Mutation m = Mutation { persons :: () -> MutRes () IO (Persons MutRes)
+--                           } deriving (Generic, GQLType)
 
 --data DeityArgs = DeityArgs { name :: Text, mythology :: Maybe Text } deriving (Generic)
 
 -- | The query resolver
---resolveQuery::QueryQL (Res () IO)
+resolveQuery::QueryQL (Res () IO)
 resolveQuery = QueryQL { --deity = resolveDeity
                          persons = personResolver
                        }
 -- | The mutation resolver
 --resolveMutation::Mutation (MutRes () IO)
-resolveMutation = Mutation {
-                             persons = personResolver
-                           }
+--resolveMutation = Mutation {
+--                             persons = personResolver
+--                           }
 
 
 -- BASE EXAMPLE
@@ -65,9 +65,9 @@ resolveMutation = Mutation {
 
 rootResolver :: RootResolver IO () QueryQL Undefined Undefined
 rootResolver = RootResolver { queryResolver = resolveQuery
-                               , mutationResolver = Undefined
-                               , subscriptionResolver = Undefined
-                               }
+                            , mutationResolver = Undefined
+                            , subscriptionResolver = Undefined
+                            }
 
 -- | Compose the graphQL api
 api:: GQLRequest -> IO GQLResponse

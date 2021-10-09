@@ -18,7 +18,7 @@ module Graphql.Admin.DataTypes where
 import GHC.Generics
 import Data.Text (Text, pack)
 import Data.Morpheus.Kind (INPUT_OBJECT)
-import Data.Morpheus.Types (GQLType(..))
+import Data.Morpheus.Types (GQLType(..), ResolverQ)
 import Graphql.Utils (Page, PageArg, EntityIdArg, EntityChangeStatusArg)
 
 -- PERSON DATA TYPES
@@ -31,7 +31,7 @@ data Person = Person { personId :: Int
                        , modifiedDate :: Maybe Text
                        } deriving (Generic, GQLType)
 
-data Persons o = Persons { person :: EntityIdArg -> o () IO Person
+data Persons o = Persons { person :: EntityIdArg -> o Person
                          } deriving (Generic, GQLType)
 
 --data Query m = Query

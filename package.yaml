@@ -14,7 +14,7 @@ dependencies:
 - morpheus-graphql    >= 0.15.0
 - persistent  >=2.8 && <3.0
 - esqueleto
-- persistent-postgresql >=2.8 && <3.0
+- persistent-postgresql >=2.13 && <3.0
 - persistent-template >=2.5 && <3.0
 - text >=0.11 && <2.0
 - aeson
@@ -28,7 +28,9 @@ dependencies:
 - mtl
 - safe-exceptions
 - resource-pool
-
+- unliftio-core
+- resourcet
+- monad-control
 
 library:
   source-dirs: src
