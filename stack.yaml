@@ -4,9 +4,11 @@ packages:
 - .
 
 extra-deps:
-- aws-lambda-haskell-runtime-4.1.1
+#- aws-lambda-haskell-runtime-4.1.2
 #- git: https://github.com/dnikolovv/aws-lambda-haskell-runtime.git
 #  commit: 3a9d26dee8a39fdbe7bd26bc0ec058f904cdf828
+- git: https://github.com/janiez/aws-lambda-haskell-runtime.git
+  commit: c755ff93c90213072e22269483bfc9487588cc93
 - safe-exceptions-checked-0.1.0
 - morpheus-graphql-code-gen-0.19.3
 - morpheus-graphql-0.19.3
