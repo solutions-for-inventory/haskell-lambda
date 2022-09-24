@@ -10,18 +10,11 @@ packages:
     git: https://github.com/janiez/aws-lambda-haskell-runtime.git
     pantry-tree:
       size: 3424
-      sha256: c020200b5515c7d0acb8a4d5b5bde1f187f45ec3979f44f8eef09acd64fbe0b6
-    commit: c755ff93c90213072e22269483bfc9487588cc93
+      sha256: 03aefd7a43ffbd0de3ef53982a2af80f9f123ed29ea4c259a64c1a88bad626d7
+    commit: 3407003cdedd16a79530e42549c1ee3802c2a918
   original:
     git: https://github.com/janiez/aws-lambda-haskell-runtime.git
-    commit: c755ff93c90213072e22269483bfc9487588cc93
-- completed:
-    hackage: safe-exceptions-checked-0.1.0@sha256:ae142f284c6b102f0e7606a69a5719f4f72771d9cc353af72fa4484326689100,1603
-    pantry-tree:
-      size: 298
-      sha256: d1f8ba50967547f26cdc37cbc64bdc85af57d856986876a6a5767a61977bc299
-  original:
-    hackage: safe-exceptions-checked-0.1.0
+    commit: 3407003cdedd16a79530e42549c1ee3802c2a918
 - completed:
     hackage: morpheus-graphql-code-gen-0.19.3@sha256:1c091f26e5df356e803c8c7f246901c02837556bd3a4183d35f7226032427c8b,2307
     pantry-tree:
@@ -52,7 +45,7 @@ packages:
     hackage: morpheus-graphql-core-0.19.3
 snapshots:
 - completed:
-    size: 619164
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/18.yaml
-    sha256: 65b9809265860e085b4f61d4eb00d5d73e41190693620385a69cc9d9df7a901d
-  original: lts-19.18
+    size: 619403
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/25.yaml
+    sha256: 1ecad1f0bd2c27de88dbff6572446cfdf647c615d58a7e2e2085c6b7dfc04176
+  original: lts-19.25
