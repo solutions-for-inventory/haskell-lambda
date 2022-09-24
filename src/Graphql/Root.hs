@@ -20,7 +20,7 @@ import Data.Text (Text, pack)
 import Control.Monad.Trans.Class (lift)
 import           Data.Morpheus              (interpreter)
 import           Data.Morpheus.Document     ()
-import           Data.Morpheus.Types        (RootResolver (..), GQLType(..), Undefined(..), Res, MutRes, GQLRequest, GQLResponse)
+import           Data.Morpheus.Types        (RootResolver (..), GQLType(..), Undefined(..), Res, MutRes, GQLRequest, GQLResponse, ResolverQ)
 import           Data.Morpheus.Document (toGraphQLDocument)
 import           Data.ByteString.Lazy.Internal (ByteString)
 import           Graphql.Utils ()
@@ -28,8 +28,8 @@ import           Graphql.Admin.DataTypes
 import           Graphql.Admin.Person
 
 data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
---                           persons :: () -> Res () IO (Persons Res)
-                          persons :: () -> m (Persons m)
+                           persons :: () -> Res () IO (Persons Res)
+--                          persons :: () -> m (Persons m)
                          } deriving (Generic, GQLType)
 
 --data Mutation m = Mutation { persons :: () -> MutRes () IO (Persons MutRes)

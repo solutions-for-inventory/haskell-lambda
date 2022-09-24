@@ -52,7 +52,7 @@ Person_ json sql=t_person
     createdDate UTCTime
     modifiedDate UTCTime Maybe
     UniquePersonDocumentId documentId
-    deriving Show
+    deriving Show Read Eq
 |]
 
 connectionString :: ConnectionString

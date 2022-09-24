@@ -33,12 +33,12 @@ import Control.Monad.IO.Unlift (MonadUnliftIO)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Reader (runReaderT, ReaderT)
 -- Query Resolvers
-type Mod m a = ReaderT SqlBackend m a
+type App m a = ReaderT SqlBackend m a
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
---personResolver :: (Applicative f, MonadTrans t, ToBackendKey SqlBackend Person_) => () -> f (Persons (t IO))
+personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
 personResolver _ = pure Persons {
-                                  person = getPersonByIdResolver_
+--                                  person = getPersonByIdResolver_
 --                                , page = pagePersonResolver
 --                                , createUpdatePerson = createUpdatePersonResolver
                                 }
