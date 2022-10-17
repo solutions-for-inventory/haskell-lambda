@@ -31,8 +31,10 @@ data Person = Person { personId :: Int
                        , modifiedDate :: Maybe Text
                        } deriving (Generic, GQLType)
 
-data Persons o = Persons { person :: EntityIdArg -> o () IO Person
+data Persons o = Persons {
+                           person :: EntityIdArg -> o Person
                          } deriving (Generic, GQLType)
+
 
 --data Query m = Query
 --  { deity :: DeityArgs -> m Deity

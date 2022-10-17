@@ -26,8 +26,10 @@ handler person context =
   else
     return (Left "A person's age must be positive")
 
---gqlHandler :: GQLRequest -> Context () -> IO GQLResponse
---gqlHandler gqlRequest context = api gqlRequest
+gqlHandler :: GQLRequest -> Context () -> IO (Either String GQLResponse)
+gqlHandler gqlRequest context = do
+                                 gqlResponse <- api gqlRequest
+                                 return $ Right gqlResponse
 --
 --gqlSchemaHandler :: () -> Context () -> IO ByteString
 --gqlSchemaHandler gqlRequest context = return apiDoc

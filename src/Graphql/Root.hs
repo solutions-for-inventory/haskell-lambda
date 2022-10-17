@@ -28,8 +28,8 @@ import           Graphql.Admin.DataTypes
 import           Graphql.Admin.Person
 
 data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
-                           persons :: () -> Res () IO (Persons Res)
---                          persons :: () -> m (Persons m)
+--                            persons :: () -> Res () IO (Persons Res)
+                           persons :: () -> m (Persons m)
                          } deriving (Generic, GQLType)
 
 --data Mutation m = Mutation { persons :: () -> MutRes () IO (Persons MutRes)
@@ -38,10 +38,10 @@ data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
 --data DeityArgs = DeityArgs { name :: Text, mythology :: Maybe Text } deriving (Generic)
 
 -- | The query resolver
-resolveQuery::QueryQL (Res () IO)
-resolveQuery = QueryQL { --deity = resolveDeity
-                         persons = personResolver
-                       }
+-- resolveQuery::QueryQL (Res () IO)
+-- resolveQuery = QueryQL { --deity = resolveDeity
+--                          persons = personResolver
+--                        }
 -- | The mutation resolver
 --resolveMutation::Mutation (MutRes () IO)
 --resolveMutation = Mutation {
@@ -64,7 +64,9 @@ resolveQuery = QueryQL { --deity = resolveDeity
 --testsResolver TestArg {yourFullName } = pure NoDeity {noFullName = "Test no full am", nopower = Just "no power"}
 
 rootResolver :: RootResolver IO () QueryQL Undefined Undefined
-rootResolver = RootResolver { queryResolver = resolveQuery
+rootResolver = RootResolver { queryResolver = QueryQL {
+                                                       persons = personResolver
+                                                      }
                             , mutationResolver = Undefined
                             , subscriptionResolver = Undefined
                             }

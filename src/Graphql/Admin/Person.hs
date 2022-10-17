@@ -32,31 +32,26 @@ import Data.Typeable
 import Control.Monad.IO.Unlift (MonadUnliftIO)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Reader (runReaderT, ReaderT)
+import Data.Morpheus.Types (ResolverQ, IORes)
 -- Query Resolvers
 type App m a = ReaderT SqlBackend m a
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
-personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
+personResolver :: () -> ResolverQ () IO Persons
 personResolver _ = pure Persons {
---                                  person = getPersonByIdResolver_
+                                 person = getPersonByIdResolver_
 --                                , page = pagePersonResolver
 --                                , createUpdatePerson = createUpdatePersonResolver
                                 }
 
-fromInt :: ToBackendKey SqlBackend record => Int -> Key record
-fromInt = toSqlKey . fromIntegral
-
 --getPersonByIdResolver_ :: forall (o :: * -> (* -> *) -> * -> *).(Typeable o, MonadTrans (o ())) => EntityIdArg -> o () IO Person
 --getPersonByIdResolver_ :: forall (o :: * -> (* -> *) -> * -> *).(Typeable o, MonadTrans (o ())) => EntityIdArg -> o () IO Person
 --getPersonByIdResolver_ :: forall (t :: (* -> *) -> * -> *)(m :: * -> *).(MonadTrans t, MonadUnliftIO m) => EntityIdArg -> t m Person
---getPersonByIdResolver_ :: (MonadIO t) => EntityIdArg -> Mod t Person
+getPersonByIdResolver_ :: EntityIdArg -> ResolverQ () IO Person
 getPersonByIdResolver_ EntityIdArg {..} = lift  $ do
---                                          let personEntityId :: Person_Id = toSqlKey $ fromIntegral entityId
---                                          let personEntityId :: Person_Id = fromInt $ fromIntegral entityId
-                                          persons <- runDB $ selectList [Person_LastName ==. "personId"] []
-
---                                          let personEntityId = (fromInt entityId)
---                                          person <- runDB $ getJustEntity (toSqlKey $ fromIntegral entityId :: Person_Id)
+                                          let personEntityId = Person_Key $ fromIntegral entityId
+--                                           persons <- runDB $ selectList [Person_LastName ==. "personId"] []
+                                          person <- runDB $ getJustEntity personEntityId
                                           return toPersonQL
 
 
