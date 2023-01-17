@@ -1,15 +1,14 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM amazonlinux:2022.0.20221207.4 as build
+FROM centos:centos7.9.2009 as build
 
 # Build the lambda
 RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 
-#RUN curl -sSL https://s3.amazonaws.com/download.fpcomplete.com/centos/7/fpco.repo | tee /etc/yum.repos.d/fpco.repo
-RUN yum install haskell-platform --enablerepo=epel
+RUN curl -sSL https://s3.amazonaws.com/download.fpcomplete.com/centos/7/fpco.repo | tee /etc/yum.repos.d/fpco.repo
 RUN stack clean --full
 RUN stack build
 
