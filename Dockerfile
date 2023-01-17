@@ -8,21 +8,7 @@ RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 
-# Install required static development libs
-RUN yum update -y && \
-    yum install -y \
-    tar \
-    gcc \
-    glibc-static \
-    gmp-static \
-    shadow-utils \
-    zlib-devel \
-    postgresql-devel \
-    xz
-
-# Install Haskell stack
-RUN curl -sSL https://get.haskellstack.org/ | sh
-
+RUN curl -sSL https://download.fpcomplete.com/centos/7/fpco.repo | tee /etc/yum.repos.d/fpco.repo
 RUN stack clean --full
 RUN stack build
 
