@@ -9,7 +9,7 @@ WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 
 RUN yum update -y
-RUN curl -sSL https://s3.amazonaws.com/download.fpcomplete.com/centos/7/fpco.repo | tee /etc/yum.repos.d/fpco.repo
+RUN curl -sSL https://s3.amazonaws.com/download.fpcomplete.com/centos/7/fpco.repo | sudo tee /etc/yum.repos.d/fpco.repo
 RUN yum -y install stack
 
 RUN stack clean --full
