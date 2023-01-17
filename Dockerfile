@@ -1,12 +1,16 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM haskell:9.2.5 as build
+FROM amazonlinux:2022.0.20221207.4 as build
 
 # Build the lambda
 RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
+
+RUN yum update -y
+RUN curl -sSL https://s3.amazonaws.com/download.fpcomplete.com/centos/7/fpco.repo | tee /etc/yum.repos.d/fpco.repo
+RUN yum -y install stack
 
 RUN stack clean --full
 RUN stack build
