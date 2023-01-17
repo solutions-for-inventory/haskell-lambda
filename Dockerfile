@@ -11,6 +11,7 @@ COPY . /opt/haskell-lambda
 # Install required static development libs
 RUN yum update -y && \
     yum install -y \
+    tar \
     gcc \
     glibc-static \
     gmp-static \
