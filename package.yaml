@@ -18,7 +18,7 @@ dependencies:
 - persistent-template >=2.5 && <3.0
 - text >=0.11 && <2.0
 - aeson
-- bytestring >=0.9 && <0.11
+- bytestring >=  0.10.4 && <0.12
 - time
 - random  >= 1.1
 - transformers

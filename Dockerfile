@@ -1,7 +1,7 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM haskell:9.0.2 as build
+FROM haskell:9.2.5 as build
 
 # Build the lambda
 RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
