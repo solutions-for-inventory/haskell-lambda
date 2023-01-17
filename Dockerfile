@@ -8,7 +8,7 @@ RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 
-RUN yum install -y tar xz git gcc make libffi zlib
+RUN yum install -y tar xz git gcc make libffi zlib binutils
 RUN curl -sSL https://get.haskellstack.org/ | sh
 RUN stack setup
 RUN stack clean --full
