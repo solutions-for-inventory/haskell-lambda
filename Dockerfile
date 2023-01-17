@@ -8,7 +8,7 @@ RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 
-RUN curl -sSL https://s3.amazonaws.com/download.fpcomplete.com/centos/7/fpco.repo | tee /etc/yum.repos.d/fpco.repo
+RUN curl -sSL https://get.haskellstack.org/ | sh
 RUN stack clean --full
 RUN stack build
 
