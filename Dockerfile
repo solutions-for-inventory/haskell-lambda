@@ -1,13 +1,14 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM centos:centos7.9.2009 as build
+FROM amazonlinux:2022.0.20221207.4 as build
 
 # Build the lambda
 RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 
+RUN yum install -y tar
 RUN curl -sSL https://get.haskellstack.org/ | sh
 RUN stack clean --full
 RUN stack build
