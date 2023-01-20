@@ -32,7 +32,7 @@ import Data.Typeable
 import Control.Monad.IO.Unlift (MonadUnliftIO)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Reader (runReaderT, ReaderT)
-import Data.Morpheus.Types (ResolverQ, IORes)
+import Data.Morpheus.Types (ResolverQ)
 -- Query Resolvers
 type App m a = ReaderT SqlBackend m a
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)

@@ -18,10 +18,13 @@ module Graphql.Root (api, apiDoc) where
 import           GHC.Generics
 import Data.Text (Text, pack)
 import Control.Monad.Trans.Class (lift)
+import Data.Proxy (Proxy(..))
 import           Data.Morpheus              (interpreter)
 import           Data.Morpheus.Document     ()
-import           Data.Morpheus.Types        (RootResolver (..), GQLType(..), Undefined(..), Res, MutRes, GQLRequest, GQLResponse, ResolverQ)
-import           Data.Morpheus.Document (toGraphQLDocument)
+--import           Data.Morpheus.Types        (RootResolver (..), GQLType(..), GQLRequest, GQLResponse, ResolverQ, Undefined)
+import           Data.Morpheus.Types (RootResolver (..), Undefined (..), GQLRequest, GQLResponse, GQLType(..))
+import           Data.Morpheus.Document (gqlDocument)
+import           Data.Morpheus.Server (printSchema)
 import           Data.ByteString.Lazy.Internal (ByteString)
 import           Graphql.Utils ()
 import           Graphql.Admin.DataTypes
@@ -67,14 +70,22 @@ rootResolver :: RootResolver IO () QueryQL Undefined Undefined
 rootResolver = RootResolver { queryResolver = QueryQL {
                                                        persons = personResolver
                                                       }
-                            , mutationResolver = Undefined
-                            , subscriptionResolver = Undefined
+--                            , mutationResolver = Undefined
+--                            , subscriptionResolver = Undefined
                             }
 
 -- | Compose the graphQL api
 api:: GQLRequest -> IO GQLResponse
-api request = do
-               interpreter rootResolver request
+api request = interpreter rootResolver request
 
-apiDoc :: Data.ByteString.Lazy.Internal.ByteString
-apiDoc = toGraphQLDocument $ Just rootResolver
+--apiDoc :: Data.ByteString.Lazy.Internal.ByteString
+--apiDoc :: Proxy (RootResolver IO () QueryQL Undefined Undefined)
+--apiDoc = (printSchema Proxy) rootResolver
+
+type APIResolver e m = RootResolver m e QueryQL Undefined Undefined
+
+--proxy :: Proxy (APIResolver () IO)
+proxy :: Proxy (RootResolver IO () QueryQL Undefined Undefined)
+proxy = Proxy
+
+apiDoc = printSchema $ proxy

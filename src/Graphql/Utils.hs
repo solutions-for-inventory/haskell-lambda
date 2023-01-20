@@ -20,7 +20,7 @@ import qualified Data.Text as T
 import qualified Database.Esqueleto      as E
 --import Import
 import GHC.Generics
-import Data.Morpheus.Kind (INPUT_OBJECT)
+--import Data.Morpheus.Kind (INPUT_OBJECT)
 import Data.Morpheus.Types (GQLType(..))
 import Data.Time
 import Enums
@@ -71,9 +71,9 @@ data Predicate = Predicate { field :: Text
                            , conjunction :: Maybe [Predicate]
                            } deriving (Generic)
 
-instance GQLType Predicate where
-    type  KIND Predicate = INPUT_OBJECT
-    description = const $ Just $ pack "This field holds predicate information"
+--instance GQLType Predicate where
+--    type  KIND Predicate = INPUT_OBJECT
+--    description = const $ Just $ pack "This field holds predicate information"
 
 --data DummyArg = DummyArg {} deriving (Generic)
 

@@ -17,7 +17,7 @@ module Graphql.Admin.DataTypes where
 
 import GHC.Generics
 import Data.Text (Text, pack)
-import Data.Morpheus.Kind (INPUT_OBJECT)
+--import Data.Morpheus.Kind (INPUT_OBJECT)
 import Data.Morpheus.Types (GQLType(..), ResolverQ)
 import Graphql.Utils (Page, PageArg, EntityIdArg, EntityChangeStatusArg)
 
@@ -48,6 +48,6 @@ data PersonArg = PersonArg { personId :: Int
                            , documentId :: Text
                            } deriving (Generic)
 
-instance GQLType PersonArg where
-    type  KIND PersonArg = INPUT_OBJECT
-    description = const $ Just $ pack "The item that holds the person information"
+--instance GQLType PersonArg where
+--    type  KIND PersonArg = INPUT_OBJECT
+--    description = const $ Just $ pack "The item that holds the person information"

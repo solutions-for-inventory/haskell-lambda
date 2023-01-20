@@ -31,5 +31,5 @@ gqlHandler gqlRequest context = do
                                  gqlResponse <- api gqlRequest
                                  return $ Right gqlResponse
 --
---gqlSchemaHandler :: () -> Context () -> IO ByteString
---gqlSchemaHandler gqlRequest context = return apiDoc
+gqlSchemaHandler :: () -> Context () -> IO ByteString
+gqlSchemaHandler gqlRequest context = return apiDoc
