@@ -1,7 +1,7 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM amazonlinux:2022.0.20221207.4 as build
+FROM public.ecr.aws/amazonlinux/amazonlinux:2.0.20221210.1-amd64 as build
 
 # Build the lambda
 RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
