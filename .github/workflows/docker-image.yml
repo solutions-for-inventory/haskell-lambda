@@ -7,7 +7,7 @@ on:
     branches: [ "release-*" ]
 env:
   IMAGE_NAME: hlambda-gql
-  VERSION: 1.0
+  VERSION: "1.0"
 jobs:
 
   build:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Push image
         run: |
-          BUILD_CUSTOM_NUMBER=$(echo "$VERSION-${GITHUB_SHA: -5}-$GITHUB_RUN_ID")
+          BUILD_CUSTOM_NUMBER=$(echo "$VERSION-${GITHUB_SHA: -5}-$GITHUB_RUN_NUMBER")
           echo "Custom build number: $BUILD_CUSTOM_NUMBER"
 
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
