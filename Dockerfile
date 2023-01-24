@@ -32,13 +32,14 @@ ARG EXECUTABLE_NAME
 ARG OUTPUT_DIR
 
 WORKDIR ${LAMBDA_RUNTIME_DIR}
+COPY config/settings.yml ${LAMBDA_RUNTIME_DIR}/settings.yml
 COPY --from=build ${OUTPUT_DIR} .
 
 #RUN ls
 #RUN mv ${EXECUTABLE_NAME} bootstrap || true
 RUN ls
 
-CMD [ "handler" ]
+CMD [ "/var/runtime/bootstrap" ]
 # docker haskell lambda
 # docker run -p 9000:8080 random-letter:latest
 # curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"personName": "Jorge", "personAge": 30}'
