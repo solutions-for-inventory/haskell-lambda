@@ -32,6 +32,7 @@ dependencies:
 - unliftio-core
 - resourcet
 - monad-control
+- yaml
 
 library:
   source-dirs: src
