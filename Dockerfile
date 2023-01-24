@@ -32,7 +32,7 @@ ARG EXECUTABLE_NAME
 ARG OUTPUT_DIR
 
 WORKDIR ${LAMBDA_RUNTIME_DIR}
-COPY config/settings.yml ${LAMBDA_RUNTIME_DIR}/settings.yml
+COPY config/settings.yml ${LAMBDA_RUNTIME_DIR}/config/settings.yml
 COPY --from=build ${OUTPUT_DIR} .
 
 #RUN ls
