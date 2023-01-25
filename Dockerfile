@@ -11,7 +11,6 @@ ARG OUTPUT_DIR
 ARG EXECUTABLE_NAME
 
 RUN mkdir ${OUTPUT_DIR}
-
 RUN cp $(stack path --local-install-root)/bin/${EXECUTABLE_NAME} ${OUTPUT_DIR}/${EXECUTABLE_NAME}
 
 ENTRYPOINT sh
