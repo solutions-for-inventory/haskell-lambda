@@ -10,12 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build image
-        run: docker build . --file DockerfileBase --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-
       - name: Log in to registry
         # This is where you will update the personal access token to GITHUB_TOKEN
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: Build image
+        run: docker build . --file DockerfileBase --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
 
       - name: Push image
         run: |
