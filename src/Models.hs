@@ -74,7 +74,7 @@ migrateDB  = runDB (runMigration migrateAll)
 runDB :: ReaderT SqlBackend (NoLoggingT (ResourceT IO)) a -> IO a
 runDB action = do
                  DBConfig{..} <- getDBConfig
-                 let connectionString = encodeUtf8 $ pack $ printf "host=%s port=%s user=%s dbname=%s password=%s" host port user database password
+                 let connectionString = encodeUtf8 $ pack $ printf "host=%s port=%d user=%s dbname=%s password=%s" host port user database password
                  runStderrLoggingT $ withPostgresqlPool connectionString poolsize $ \pool -> liftIO $ do
                                                                                                  flip runSqlPersistMPool pool $ do
                                                                                                                                     runMigration migrateAll
