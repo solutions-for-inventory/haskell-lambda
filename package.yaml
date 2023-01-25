@@ -54,3 +54,20 @@ default-extensions:
   - OverloadedLists
   - OverloadedStrings
   - DeriveGeneric
+
+tests:
+  haskell-lambda-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options: -Wall
+    dependencies:
+      - haskell-lambda
+      - base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
+      - HUnit
+      - hspec
+      - tasty
+      - morpheus-graphql
+      - morpheus-graphql-app
+      - morpheus-graphql-code-gen
+      - morpheus-graphql-core
+      - morpheus-graphql-tests
