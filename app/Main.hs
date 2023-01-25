@@ -12,4 +12,4 @@ main = do
     defaultDispatcherOptions
     (pure ())
     id
-    (addStandaloneLambdaHandler "handler" Lib.gqlSchemaHandler)
+    (addStandaloneLambdaHandler "handler" Lib.gqlHandler)
