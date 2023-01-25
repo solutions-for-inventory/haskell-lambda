@@ -1,0 +1,12 @@
+#app configs
+#port:           "_env:APP_PORT:4200"
+
+#persistence configs
+
+db:
+  user:     "_env:DB_USER:dev"
+  password: "_env:DB_PASSWORD:dev123"
+  host:     "_env:DB_HOST:postgres"
+  port:     "_env:DB_PORT:5432"
+  database: "_env:DB_DATABASE:pg_db"
+  poolsize: "_env:DB_POOL_SIZE:10"

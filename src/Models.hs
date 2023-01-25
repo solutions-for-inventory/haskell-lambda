@@ -31,12 +31,17 @@ import Database.Persist (Entity(..))
 import Database.Persist (selectList)
 import Database.Persist.Postgresql(getJustEntity)
 import Data.Pool (Pool)
+import Text.Printf (printf)
+import Data.Text (pack)
+import Data.Text.Encoding (encodeUtf8)
+
 --import Data.Conduit(MonadUnliftIO)
 --import Control.Exception.Safe
 --import Say
 --import Config (Config, configPool)
 import Data.Text (Text)
 import Data.Time
+import Config
 
 share
     [ mkPersist sqlSettings
@@ -55,8 +60,8 @@ Person_ json sql=t_person
     deriving Show Read Eq
 |]
 
-connectionString :: ConnectionString
-connectionString = "host=192.168.0.100 port=5432 user=inventory_user dbname=inventory_repair_db password=inventory_password"
+--connectionString :: ConnectionString
+--connectionString = "host=192.168.0.100 port=5432 user=inventory_user dbname=inventory_repair_db password=inventory_password"
 
 migrateDB  :: IO ()
 migrateDB  = runDB (runMigration migrateAll)
@@ -67,10 +72,13 @@ migrateDB  = runDB (runMigration migrateAll)
 
 -- this is the repeated code that can be factored out
 runDB :: ReaderT SqlBackend (NoLoggingT (ResourceT IO)) a -> IO a
-runDB action = runStderrLoggingT $ withPostgresqlPool connectionString 10 $ \pool -> liftIO $ do
-  flip runSqlPersistMPool pool $ do
-    runMigration migrateAll
-    action
+runDB action = do
+                 DBConfig{..} <- getDBConfig
+                 let connectionString = encodeUtf8 $ pack $ printf "host=%s port=%d user=%s dbname=%s password=%s" host port user database password
+                 runStderrLoggingT $ withPostgresqlPool connectionString poolsize $ \pool -> liftIO $ do
+                                                                                                 flip runSqlPersistMPool pool $ do
+                                                                                                                                    runMigration migrateAll
+                                                                                                                                    action
 
 --listPersons :: Person_Id -> IO (Entity Person_)
 --listPersons personId = do

@@ -1,17 +1,9 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM public.ecr.aws/amazonlinux/amazonlinux:2.0.20221210.1-amd64 as build
-
-# Build the lambda
-RUN mkdir /opt/haskell-lambda && cd /opt/haskell-lambda
+FROM ghcr.io/solutions-for-inventory/hlambda-gql-base:1.0 as build
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
-
-RUN yum install -y tar xz git gcc make libffi zlib-devel gmp-devel postgresql-devel
-#RUN yum install -y tar xz git gcc make libffi zlib gmp-devel glibc-static gmp-static  shadow-utils zlib-devel postgresql-devel xz
-RUN curl -sSL https://get.haskellstack.org/ | sh
-RUN stack setup
 RUN stack clean --full
 RUN stack build
 
@@ -32,6 +24,7 @@ ARG EXECUTABLE_NAME
 ARG OUTPUT_DIR
 
 WORKDIR ${LAMBDA_RUNTIME_DIR}
+COPY config/settings.yml ${LAMBDA_RUNTIME_DIR}/config/settings.yml
 COPY --from=build ${OUTPUT_DIR} .
 
 #RUN ls
