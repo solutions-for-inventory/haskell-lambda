@@ -39,7 +39,7 @@ COPY --from=build ${OUTPUT_DIR} .
 #RUN mv ${EXECUTABLE_NAME} bootstrap || true
 RUN ls
 
-CMD [ "/var/runtime/bootstrap" ]
+CMD [ "handler" ]
 # docker haskell lambda
 # docker run -p 9000:8080 random-letter:latest
 # curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"personName": "Jorge", "personAge": 30}'
