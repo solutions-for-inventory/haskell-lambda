@@ -3,6 +3,7 @@
 
 module Lib where
 
+import RIO hiding (ByteString)
 import GHC.Generics
 import Data.Aeson
 import Aws.Lambda

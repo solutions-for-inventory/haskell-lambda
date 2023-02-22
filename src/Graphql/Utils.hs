@@ -17,7 +17,7 @@ import System.Random
 import Prelude as P
 import Data.Text (Text, pack)
 import qualified Data.Text as T
-import qualified Database.Esqueleto      as E
+--import qualified Database.Esqueleto      as E
 --import Import
 import GHC.Generics
 --import Data.Morpheus.Kind (INPUT_OBJECT)
@@ -119,12 +119,12 @@ fromText f text | T.strip text == "" = []
 --conjunctionFilters xs = P.concat xs
 --unionFilters (x:xs) = foldl (||.) x xs
 
-getOperator "=" = (E.==.)
-getOperator "!=" = (E.!=.)
-getOperator ">" = (E.>.)
-getOperator ">=" = (E.>=.)
-getOperator "<=" = (E.<=.)
-getOperator "<" = (E.<.)
+--getOperator "=" = (E.==.)
+--getOperator "!=" = (E.!=.)
+--getOperator ">" = (E.>.)
+--getOperator ">=" = (E.>=.)
+--getOperator "<=" = (E.<=.)
+--getOperator "<" = (E.<.)
 
-conjunctionFilters (x:xs) = foldl (E.&&.) x xs
-unionFilters (x:xs) = foldl (E.||.) x xs
+--conjunctionFilters (x:xs) = foldl (E.&&.) x xs
+--unionFilters (x:xs) = foldl (E.||.) x xs

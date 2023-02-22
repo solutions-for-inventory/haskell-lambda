@@ -17,13 +17,13 @@ module Graphql.Admin.Person (
 --                , getPersonByIdResolver
                 ) where
 
-import Models
+--import Models
 import Control.Monad.Trans.Class (lift)
 --import Database.Persist.Sql (toSqlKey, fromSqlKey)
-import Database.Persist.Postgresql(getJustEntity, get, toSqlKey, selectList, (==.), ToBackendKey, SqlBackend)
-import qualified Database.Esqueleto      as E
+--import Database.Persist.Postgresql(getJustEntity, get, toSqlKey, selectList, (==.), ToBackendKey, SqlBackend)
+--import qualified Database.Esqueleto      as E
 --import Database.Esqueleto ((==.))
-import Database.Esqueleto      ((^.), (%), (++.){-, (?.), notIn, in_-})
+--import Database.Esqueleto      ((^.), (%), (++.){-, (?.), notIn, in_-})
 import Prelude as P hiding (zip)
 import Graphql.Utils
 import Graphql.Admin.DataTypes
@@ -34,7 +34,7 @@ import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Reader (runReaderT, ReaderT)
 import Data.Morpheus.Types (ResolverQ)
 -- Query Resolvers
-type App m a = ReaderT SqlBackend m a
+--type App m a = ReaderT SqlBackend m a
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
 --personResolver :: (Applicative f, Typeable o, MonadTrans (o ())) => () -> f (Persons o)
 personResolver :: () -> ResolverQ () IO Persons
@@ -49,9 +49,9 @@ personResolver _ = pure Persons {
 --getPersonByIdResolver_ :: forall (t :: (* -> *) -> * -> *)(m :: * -> *).(MonadTrans t, MonadUnliftIO m) => EntityIdArg -> t m Person
 getPersonByIdResolver_ :: EntityIdArg -> ResolverQ () IO Person
 getPersonByIdResolver_ EntityIdArg {..} = lift  $ do
-                                          let personEntityId = Person_Key $ fromIntegral entityId
+--                                          let personEntityId = Person_Key $ fromIntegral entityId
 --                                           persons <- runDB $ selectList [Person_LastName ==. "personId"] []
-                                          person <- runDB $ getJustEntity personEntityId
+--                                          person <- runDB $ getJustEntity personEntityId
                                           return toPersonQL
 
 

@@ -8,7 +8,7 @@
 module Enums where
 
 import Data.Text
-import Database.Persist.TH
+--import Database.Persist.TH
 import Prelude
 import GHC.Generics
 -- import Data.Morpheus.Kind (ENUM)
@@ -16,22 +16,22 @@ import Data.Morpheus.Types (GQLType(..))
 
 
 data EntityStatus = ACTIVE | INACTIVE | EXPIRED | DELETED | PENDING | UNKNOWN  deriving (Show, Read, Eq, Generic, GQLType)
-derivePersistField "EntityStatus"
+--derivePersistField "EntityStatus"
 
 data CategoryScope = ITEM_CATEGORY | EMPLOYEE_JOB_CATEGORY | TASK_CATEGORY | SUBTASK_CATEGORY | EVENT_CATEGORY | NO_CATEGORY  deriving (Show, Read, Eq, Generic, GQLType)
-derivePersistField "CategoryScope"
+--derivePersistField "CategoryScope"
 
 data ItemType = SPARE_PARTS | TOOLS | SUPPLIES | EQUIPMENT | NONE deriving (Show, Read, Eq, Generic)
-derivePersistField "ItemType"
+--derivePersistField "ItemType"
 
 data TimeFrequency = DAY|WEEK|MONTH|YEAR deriving (Show, Read, Eq, Generic)
-derivePersistField "TimeFrequency"
+--derivePersistField "TimeFrequency"
 
 -- instance GQLType EntityStatus where
 --   type KIND EntityStatus = ENUM
 
 data Locale = EN_US | ES_US | ES_BO deriving (Eq, Generic)
-derivePersistField "Locale"
+--derivePersistField "Locale"
 
 instance Show Locale where
   show EN_US = "en_US"

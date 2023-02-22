@@ -1,13 +1,14 @@
 module Main where
 
+import RIO
 import Aws.Lambda
 import qualified Lib
 --import Init (runAppDevel)
-import Models (migrateDB)
+--import Models (migrateDB)
 
 main :: IO ()
 main = do
-  migrateDB
+--  migrateDB
   runLambdaHaskellRuntime
     defaultDispatcherOptions
     (pure ())

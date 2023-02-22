@@ -13,10 +13,10 @@ dependencies:
 - aws-lambda-haskell-runtime >= 4.1.1
 - morpheus-graphql    >= 0.19.0
 - morpheus-graphql-server >= 0.19.0
-- persistent  >=2.8 && <3.0
-- esqueleto
-- persistent-postgresql >=2.13 && <3.0
-- persistent-template >=2.5 && <3.0
+#- persistent  >=2.8 && <3.0
+#- esqueleto
+#- persistent-postgresql >=2.13 && <3.0
+#- persistent-template >=2.5 && <3.0
 - text >=0.11 && <2.0
 - aeson
 - bytestring >=  0.10.4 && <0.12
@@ -33,6 +33,16 @@ dependencies:
 - resourcet
 - monad-control
 - yaml
+- rel8
+- rio
+- cryptonite
+- uuid
+- memory
+- file-embed
+- hasql
+- hasql-migration
+- hasql-pool
+- hasql-transaction
 
 library:
   source-dirs: src
@@ -51,9 +61,10 @@ executables:
 
 default-extensions:
   - RecordWildCards
-  - OverloadedLists
+#  - OverloadedLists
   - OverloadedStrings
   - DeriveGeneric
+  - NoImplicitPrelude
 
 tests:
   haskell-lambda-test:

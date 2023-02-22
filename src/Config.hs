@@ -3,11 +3,10 @@
 
 module Config (getDBConfig, DBConfig(..)) where
 
+import RIO
 import GHC.Generics
---import Data.Aeson
 import Data.Yaml (decodeFile, FromJSON(..), ToJSON(..))
 import Data.Yaml.Config (loadYamlSettings, useEnv)
-import Database.Persist.Postgresql (withPostgresqlPool, ConnectionString)
 import Text.Printf (printf)
 import Data.Text (pack)
 import Data.Text.Encoding (encodeUtf8)

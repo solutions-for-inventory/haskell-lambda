@@ -10,7 +10,7 @@ import Control.Monad.Logger
 import Control.Monad.Reader (MonadIO, MonadReader, asks, liftIO)
 import Control.Concurrent (killThread)
 --import qualified Control.Monad.Metrics as M
-import Database.Persist.Postgresql (runMigration, runSqlPersistMPool, withPostgresqlPool, runSqlPool, ConnectionString)
+--import Database.Persist.Postgresql (runMigration, runSqlPersistMPool, withPostgresqlPool, runSqlPool, ConnectionString)
 --import Lens.Micro ((^.))
 --import Network.Wai (Application)
 --import Network.Wai.Metrics (metrics, registerWaiMetrics)
@@ -27,7 +27,7 @@ import Control.Exception.Safe
 --import qualified Katip
 --import Logger (defaultLogEnv)
 --import Models (doMigrations)
-import Models
+--import Models
 --import Network.Wai.Handler.Warp (run)
 --import Safe (readMay)
 

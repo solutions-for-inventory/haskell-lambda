@@ -15,6 +15,7 @@
 
 module Graphql.Root (api, apiDoc) where
 
+import RIO
 import           GHC.Generics
 import Data.Text (Text, pack)
 import Control.Monad.Trans.Class (lift)
@@ -25,7 +26,7 @@ import           Data.Morpheus.Document     ()
 import           Data.Morpheus.Types (RootResolver (..), Undefined (..), GQLRequest, GQLResponse, GQLType(..))
 import           Data.Morpheus.Document (gqlDocument)
 import           Data.Morpheus.Server (printSchema)
-import           Data.ByteString.Lazy.Internal (ByteString)
+--import           Data.ByteString.Lazy.Internal (ByteString)
 import           Graphql.Utils ()
 import           Graphql.Admin.DataTypes
 import           Graphql.Admin.Person

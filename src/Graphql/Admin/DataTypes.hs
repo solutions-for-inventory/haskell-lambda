@@ -15,6 +15,7 @@
 
 module Graphql.Admin.DataTypes where
 
+import RIO
 import GHC.Generics
 import Data.Text (Text, pack)
 --import Data.Morpheus.Kind (INPUT_OBJECT)
