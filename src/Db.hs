@@ -1,9 +1,9 @@
 module Db
 (
-  module Db.Schema
+  module Db.Schema,
+  module Db.Transaction
 ) where
 
 import Db.Schema
 
---import Db.Migration
---import Db.Transaction
+import Db.Transaction

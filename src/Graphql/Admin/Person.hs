@@ -24,7 +24,11 @@ import Control.Monad.Trans.Class (lift)
 --import qualified Database.Esqueleto      as E
 --import Database.Esqueleto ((==.))
 --import Database.Esqueleto      ((^.), (%), (++.){-, (?.), notIn, in_-})
-import Prelude as P hiding (zip)
+--import Prelude as P hiding (zip)
+import RIO
+import Rel8
+import Db
+import Core.User
 import Graphql.Utils
 import Graphql.Admin.DataTypes
 import Control.Monad.Trans.Class (MonadTrans)
@@ -32,6 +36,7 @@ import Data.Typeable
 import Control.Monad.IO.Unlift (MonadUnliftIO)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Reader (runReaderT, ReaderT)
+import Data.Maybe (fromJust)
 import Data.Morpheus.Types (ResolverQ)
 -- Query Resolvers
 --type App m a = ReaderT SqlBackend m a
@@ -52,7 +57,9 @@ getPersonByIdResolver_ EntityIdArg {..} = lift  $ do
 --                                          let personEntityId = Person_Key $ fromIntegral entityId
 --                                           persons <- runDB $ selectList [Person_LastName ==. "personId"] []
 --                                          person <- runDB $ getJustEntity personEntityId
-                                          return toPersonQL
+                                          users <- executeStmt $ select $ getUserByIdStmt (litExpr $ UserId $ fromIntegral entityId)
+                                          let user = fromJust  $ listToMaybe $ map mapUserEntityToUser users
+                                          return $ toPersonQL user
 
 
 
@@ -150,14 +157,22 @@ getPersonByIdResolver_ EntityIdArg {..} = lift  $ do
 
 --toPersonQL :: Entity Person_ -> (Person Res)
 --toPersonQL :: (Typeable o, MonadTrans (o ())) => Entity Person_ -> Person o
-toPersonQL = Person { personId = 1233
-                    , firstName = "person_FirstName"
-                    , lastName = "person_LastName"
-                    , documentType = "person_DocumentType"
-                    , documentId = "321"
-                    , createdDate = "dummy createdDate"
-                    , modifiedDate = Nothing
-                    }
+--toPersonQL = Person { personId = 1233
+--                    , firstName = "person_FirstName"
+--                    , lastName = "person_LastName"
+--                    , documentType = "person_DocumentType"
+--                    , documentId = "321"
+--                    , createdDate = "dummy createdDate"
+--                    , modifiedDate = Nothing
+--                    }
+toPersonQL User{..} = Person { personId = fromIntegral $ getUserId userId
+                             , firstName = userBio
+                             , lastName = "person_LastName"
+                             , documentType = "person_DocumentType"
+                             , documentId = "321"
+                             , createdDate = "dummy createdDate"
+                             , modifiedDate = Nothing
+                             }
 --                                 where
 --                                  Person_ {..} = person
 --                                  md = case person_ModifiedDate of

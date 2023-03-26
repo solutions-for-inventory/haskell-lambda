@@ -11,9 +11,9 @@ import Data.Functor.Contravariant
 import Data.List (head, (\\))
 
 import Core.User
-import Conduit.Core.Article
+import Core.Article
 import Db
-import App
+--import App
 import Util
 
 data ArticleFilters = ArticleFilters
@@ -106,7 +106,7 @@ getArticleEnrichedDataStmt mbUser article = do
 
 {--------------------------------------------------------------------------------------------------------------------}
 
-createArticle :: Article -> AppM (Maybe Article)
+createArticle :: Article -> IO (Maybe Article)
 createArticle article = runTransaction $ do
     mbArticleId <- runStmt $ listToMaybe <$> insert (insertArticleStmt article)
     case mbArticleId of
@@ -119,7 +119,7 @@ createArticle article = runTransaction $ do
 getTagId' :: Text -> Transaction (Maybe TagId)
 getTagId' tag = runStmt $ listToMaybe <$> select (getTagIdStmt tag)
 
-getTagId :: Text -> AppM (Maybe TagId)
+getTagId :: Text -> IO (Maybe TagId)
 getTagId tag = runTransaction $ getTagId' tag
 
 getOrCreateTagId' :: Text -> Transaction TagId
@@ -129,7 +129,7 @@ getOrCreateTagId' tag = do
           return
           tagId
 
-getEnrichedArticleById :: Maybe User -> ArticleId -> AppM (Maybe EnrichedArticle)
+getEnrichedArticleById :: Maybe User -> ArticleId -> IO (Maybe EnrichedArticle)
 getEnrichedArticleById mbUser id = do
     records <- executeStmt $ select $ do
         article <- getArticleEntityByIdStmt $ litExpr id
@@ -137,12 +137,12 @@ getEnrichedArticleById mbUser id = do
         return (article, enrichedData)
     return $ listToMaybe $ map enrichedArticle records
 
-getArticleById :: ArticleId -> AppM (Maybe Article)
+getArticleById :: ArticleId -> IO (Maybe Article)
 getArticleById id = do
     records <- executeStmt $ listToMaybe <$> select (getArticleEntityByIdStmt $ litExpr id)
     return $ mapArticleEntityToArticle <$> records
 
-getEnrichedArticleBySlug :: Maybe User -> Slug -> AppM (Maybe EnrichedArticle)
+getEnrichedArticleBySlug :: Maybe User -> Slug -> IO (Maybe EnrichedArticle)
 getEnrichedArticleBySlug mbUser slug = do
     records <- executeStmt $ select $ do
             article <- getArticleEntityBySlugStmt $ litExpr slug
@@ -150,12 +150,12 @@ getEnrichedArticleBySlug mbUser slug = do
             return (article, enrichedData)
     return $ listToMaybe $ map enrichedArticle records
 
-getArticleBySlug :: Slug -> AppM (Maybe Article)
+getArticleBySlug :: Slug -> IO (Maybe Article)
 getArticleBySlug slug = do
     records <- executeStmt $ listToMaybe <$> select (getArticleEntityBySlugStmt $ litExpr slug)
     return $ mapArticleEntityToArticle <$> records
 
-getPagedArticle :: Maybe User -> Pagination -> ArticleFilters -> AppM ([EnrichedArticle], Int64)
+getPagedArticle :: Maybe User -> Pagination -> ArticleFilters -> IO ([EnrichedArticle], Int64)
 getPagedArticle mbUser p filters = do
     (total, pagedResults) <- runTransaction $ do
         total <- runStmt $ select $ aggregate $ do
@@ -168,22 +168,22 @@ getPagedArticle mbUser p filters = do
         return (total, pagedResults)
     return (map enrichedArticle pagedResults, fromMaybe 0 . listToMaybe $ total)
 
-checkFavorite :: User -> ArticleId  -> AppM Bool
+checkFavorite :: User -> ArticleId  -> IO Bool
 checkFavorite user articleId = do
     exists <- executeStmt $ select $ checkFavoriteStmt (userId user) (litExpr articleId)
     return $ exists == [True]
 
-addFavorite :: User -> ArticleId -> AppM Bool
+addFavorite :: User -> ArticleId -> IO Bool
 addFavorite user articleId = do
     rowsEffected <- executeStmt $ insert $ addFavoritedArticleStmt (userId user) articleId
     return $ rowsEffected == 1
 
-removeFavorite :: User -> ArticleId -> AppM Bool
+removeFavorite :: User -> ArticleId -> IO Bool
 removeFavorite user articleId = do
     rowsEffected <- executeStmt $ delete $ removeFavoritedArticleStmt (userId user) articleId
     return $ rowsEffected == 1
 
-deleteArticleById :: ArticleId -> AppM Bool
+deleteArticleById :: ArticleId -> IO Bool
 deleteArticleById articleId = do
     rowsEffected <- runTransaction $ do
         _ <- runStmt $ delete $ deleteAllArticleTagsStmt articleId
@@ -194,7 +194,7 @@ deleteArticleById articleId = do
 deleteArticleTag' :: ArticleId -> TagId -> Transaction Int64
 deleteArticleTag' articleId tagId = runStmt $ delete $ deleteArticleTagStmt articleId tagId
 
-updateArticle :: Article -> AppM Bool
+updateArticle :: Article -> IO Bool
 updateArticle article = do
     rowsEffected <- runTransaction $ do
         currentTagIds <- mapM getOrCreateTagId' (articleTags article)
@@ -204,7 +204,7 @@ updateArticle article = do
         runStmt $ update $ updateArticleStmt article
     return $ rowsEffected == 1
 
-getArticleFavoritedCount :: ArticleId -> AppM Int64
+getArticleFavoritedCount :: ArticleId -> IO Int64
 getArticleFavoritedCount articleId = do
     count <- executeStmt $ select $ getFavoritedCountOfArticleStmt (litExpr articleId)
     return $ fromMaybe 0 . listToMaybe $ count

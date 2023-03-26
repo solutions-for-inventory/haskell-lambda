@@ -11,9 +11,9 @@ import qualified Hasql.Session as Session
 import qualified Hasql.Transaction.Sessions as Hasql
 import Hasql.Statement (Statement)
 
---import Conduit.Config
+import Config
 --import Conduit.App
---import Conduit.Environment
+--import Environment
 
 loadPool :: ByteString -> Int -> IO Pool
 loadPool connectString poolSize = acquire poolSize (Just 1) connectString
@@ -34,12 +34,12 @@ runTransactionWithPool pool transaction = do
 runStmt :: Statement () a -> Transaction a
 runStmt = statement ()
 
-runTransaction :: forall a m env . (HasDbPool env, MonadReader env m, MonadIO m) => Transaction a -> m a
+--runTransaction :: forall a m env . (MonadReader env m, MonadIO m) => Transaction a -> m a
 runTransaction transaction = do
-    pool <- getDbPool'
+    pool <- loadPool "host=192.168.0.100 port=5432 user=user dbname=test password=123" 10
     runTransactionWithPool pool transaction
 
-executeStmt :: Statement () a -> AppM a
+executeStmt :: Statement () a -> IO a
 executeStmt = runTransaction . runStmt
 
 truncateTables :: [Text] -> Transaction ()

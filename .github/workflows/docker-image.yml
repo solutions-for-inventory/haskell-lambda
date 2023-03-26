@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "release-*" ]
+    branches: [ "rel8*" ]
   pull_request:
-    branches: [ "release-*" ]
+    branches: [ "rel8*" ]
 env:
   IMAGE_NAME: hlambda-gql
   VERSION: "1.0"
