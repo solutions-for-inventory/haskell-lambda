@@ -15,65 +15,9 @@ packages:
   original:
     commit: 3407003cdedd16a79530e42549c1ee3802c2a918
     git: https://github.com/janiez/aws-lambda-haskell-runtime.git
-- completed:
-    hackage: morpheus-graphql-0.27.0@sha256:59affb5bd9db118dc2efbb8803cc8f408856c9f32232e1bd32d015658070334d,17690
-    pantry-tree:
-      sha256: dca811cf391d2fe330614933e9f1ce9a4bf4c51b010ad85d38e8e04a8f611092
-      size: 22603
-  original:
-    hackage: morpheus-graphql-0.27.0
-- completed:
-    hackage: morpheus-graphql-core-0.27.0@sha256:00c12d8a32f98cc88648d187e5e8d791e60990f984eecc9d0f84d3d3c88bb60b,14192
-    pantry-tree:
-      sha256: 23cd72c4aba5deb823582b2d822c38d0745b14b973e4616964376583a510c586
-      size: 19536
-  original:
-    hackage: morpheus-graphql-core-0.27.0
-- completed:
-    hackage: morpheus-graphql-app-0.27.0@sha256:1848f8e77745466b5ee69d9805f553b1c7c296a03387f95f8471f22f9b7ff3d8,8344
-    pantry-tree:
-      sha256: 6b1db074a5772f3e54b1a599fd06129971703711f4e89f69338c7383716a0a7f
-      size: 10092
-  original:
-    hackage: morpheus-graphql-app-0.27.0
-- completed:
-    hackage: morpheus-graphql-code-gen-0.27.0@sha256:4a445c9f561b4d2aaba6fcacf4dd4d1476b95089bd617d799c9dfd8a0c299dc1,2700
-    pantry-tree:
-      sha256: d7cc8a21c6ede9ef53c2a219a0feefb712b39eb281be3353d295af9f5c6fd533
-      size: 1124
-  original:
-    hackage: morpheus-graphql-code-gen-0.27.0
-- completed:
-    hackage: morpheus-graphql-server-0.27.0@sha256:adcad6f6272a73d930d30e1c097c51286393f72e9dedde1ca40047c20ff2931e,24247
-    pantry-tree:
-      sha256: 165553392f19ad258a99c605699d998db02f4dadf97fe4ef709bdfee8ace1be5
-      size: 34528
-  original:
-    hackage: morpheus-graphql-server-0.27.0
-- completed:
-    hackage: morpheus-graphql-client-0.27.0@sha256:050f929015020610e3db679c9ed87a086e408672e329c6cdecae5c3f22240bd9,5236
-    pantry-tree:
-      sha256: b700b236d31993434b14db638d89b4273e6faf9fd31ccf10b967d6b973bc2fa5
-      size: 5123
-  original:
-    hackage: morpheus-graphql-client-0.27.0
-- completed:
-    hackage: morpheus-graphql-subscriptions-0.27.0@sha256:5607dac935b0c4be92e90af8a699838452fc2c7f195f27b52c69cd41f2b996bc,1784
-    pantry-tree:
-      sha256: 31bfb58d786a923556930a164ec24c744e92b79568b46dd8cc0eec03952c7379
-      size: 813
-  original:
-    hackage: morpheus-graphql-subscriptions-0.27.0
-- completed:
-    hackage: morpheus-graphql-code-gen-utils-0.27.0@sha256:3a10ce1c0de9ff874006a63c3686c3089a11042ecea7e3fa808a3e446656caf1,1571
-    pantry-tree:
-      sha256: 65a4f46453d8bdf7ca47fa6aecf12ce90b9ad0945f76b3ce6dc9b9e03c67cbc3
-      size: 700
-  original:
-    hackage: morpheus-graphql-code-gen-utils-0.27.0
 snapshots:
 - completed:
-    sha256: 4905c93319aa94aa53da8f41d614d7bacdbfe6c63a8c6132d32e6e62f24a9af4
-    size: 649315
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/6.yaml
-  original: lts-20.6
+    sha256: dad15e2ec0c09280a5c2e07190fb18710fc54472f029f34f861f686540824d81
+    size: 649592
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/16.yaml
+  original: lts-20.16
