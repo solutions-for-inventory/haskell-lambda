@@ -2,7 +2,7 @@ module Main where
 
 import RIO
 import Aws.Lambda
-import Lib (handler, gqlHandler)
+import Lib (handler, gqlHandler, gqlSchemaHandler)
 --import Init (runAppDevel)
 --import Models (migrateDB)
 
@@ -13,4 +13,4 @@ main = do
     defaultDispatcherOptions
     (pure ())
     id
-    (addStandaloneLambdaHandler "handler" handler)
+    (addStandaloneLambdaHandler "handler" gqlSchemaHandler)
