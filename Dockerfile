@@ -1,7 +1,7 @@
 ARG OUTPUT_DIR=/root/output
 ARG EXECUTABLE_NAME=bootstrap
 
-FROM ghcr.io/solutions-for-inventory/hlambda-gql-base:1.0 as build
+FROM ghcr.io/solutions-for-inventory/hlambda-gql-base:rel8 as build
 WORKDIR /opt/haskell-lambda
 COPY . /opt/haskell-lambda
 RUN stack clean --full
