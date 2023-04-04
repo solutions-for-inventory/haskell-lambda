@@ -33,7 +33,7 @@ import           Graphql.Admin.Person
 
 data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
 --                            persons :: () -> Res () IO (Persons Res)
-                           persons :: () -> m (Persons m)
+                           persons :: m (Persons m)
                          } deriving (Generic, GQLType)
 
 --data Mutation m = Mutation { persons :: () -> MutRes () IO (Persons MutRes)
@@ -69,7 +69,7 @@ data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
 
 rootResolver :: RootResolver IO () QueryQL Undefined Undefined
 rootResolver = RootResolver { queryResolver = QueryQL {
-                                                       persons = personResolver
+                                                       persons = personResolver ()
                                                       }
 --                            , mutationResolver = Undefined
 --                            , subscriptionResolver = Undefined
@@ -82,8 +82,6 @@ api request = interpreter rootResolver request
 --apiDoc :: Data.ByteString.Lazy.Internal.ByteString
 --apiDoc :: Proxy (RootResolver IO () QueryQL Undefined Undefined)
 --apiDoc = (printSchema Proxy) rootResolver
-
-type APIResolver e m = RootResolver m e QueryQL Undefined Undefined
 
 --proxy :: Proxy (APIResolver () IO)
 proxy :: Proxy (RootResolver IO () QueryQL Undefined Undefined)
