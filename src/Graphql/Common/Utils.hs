@@ -10,20 +10,17 @@
 {-# LANGUAGE DeriveAnyClass        #-}
 {-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
 
-module Graphql.Utils where
+module Graphql.Common.Utils where
 
+import RIO
+import Prelude (read)
+import RIO.List.Partial ((!!))
 import System.Random
-import Prelude as P
-import Data.Text (Text, pack)
-import qualified Data.Text as T
---import qualified Database.Esqueleto      as E
---import Import
-import GHC.Generics
---import Data.Morpheus.Kind (INPUT_OBJECT)
+import Data.Text (Text, pack, strip, splitOn, unpack)
 import Data.Morpheus.Types (GQLType(..))
 import Data.Time
-import Enums
 
 -- data Pageable = Pageable { pageIndex :: Int, pageSize :: Int } deriving (Generic)
 
@@ -50,10 +47,6 @@ data EntityChangeStatusArg = EntityChangeStatusArg { entityIds :: [Int]
                                                    , status :: Text
                                                    } deriving (Generic, GQLType)
 
--- instance GQLType Pageable where
---     type  KIND Pageable = INPUT_OBJECT
---     description = const $ Just $ pack "The item that holds the pageable information"
-
 data PageArg = PageArg { searchString :: Maybe Text
                        , pageIndex :: Maybe Int
                        , pageSize :: Maybe Int
@@ -69,13 +62,8 @@ data Predicate = Predicate { field :: Text
                            , value :: Text
                            , union :: Maybe [Predicate]
                            , conjunction :: Maybe [Predicate]
-                           } deriving (Generic)
+                           } deriving (Generic, GQLType)
 
---instance GQLType Predicate where
---    type  KIND Predicate = INPUT_OBJECT
---    description = const $ Just $ pack "This field holds predicate information"
-
---data DummyArg = DummyArg {} deriving (Generic)
 
 localDay :: IO Day
 localDay = fmap utctDay getCurrentTime
@@ -89,23 +77,23 @@ randomAlphaNumText n = do
 genRandomAlphaNumString :: Int -> IO String
 genRandomAlphaNumString 0 = return []
 genRandomAlphaNumString n = do
-                             let s = ['0'..'9'] P.++ ['A'..'Z']
-                             r <- randomRIO (0, (P.length s) - 1)
+                             let s = ['0'..'9'] ++ ['A'..'Z']
+                             r <- randomRIO (0, (length s) - 1)
                              let c = s !! r
                              s <- genRandomAlphaNumString (n - 1)
                              return (c:s)
 
 parseToInteger :: Text -> Int
-parseToInteger str = read $ T.unpack str :: Int
+parseToInteger str = read $ unpack str :: Int
 
 --textToList :: Text -> [Text]
 textToList "" _ = []
-textToList text f | T.strip text == "" = []
-                  | otherwise = P.map  (\e -> f $ T.strip e) (T.splitOn "," text)
+textToList text f | strip text == "" = []
+                  | otherwise = map  (\e -> f $ strip e) (splitOn "," text)
 
 fromText _ "" = []
-fromText f text | T.strip text == "" = []
-                | otherwise = P.map  (\e -> f $ T.strip e) (T.splitOn "," text)
+fromText f text | strip text == "" = []
+                | otherwise = map  (\e -> f $ strip e) (splitOn "," text)
 
 --getOperator "=" = (==.)
 --getOperator ">" = (>.)

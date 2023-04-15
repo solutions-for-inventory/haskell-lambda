@@ -5,16 +5,12 @@
 
 packages:
 - completed:
-    commit: 3407003cdedd16a79530e42549c1ee3802c2a918
-    git: https://github.com/janiez/aws-lambda-haskell-runtime.git
-    name: aws-lambda-haskell-runtime
+    hackage: aws-lambda-haskell-runtime-4.1.2@sha256:688e6a5e41ca82af446526cd7c00f8e68d7b54f8f8dcae20832faf8f7b318871,3027
     pantry-tree:
-      sha256: 03aefd7a43ffbd0de3ef53982a2af80f9f123ed29ea4c259a64c1a88bad626d7
-      size: 3424
-    version: 4.1.2
+      sha256: 9f2dff050802ed36e25662d49c30474b4160f502d5ce84008f5680893651b2e5
+      size: 1453
   original:
-    commit: 3407003cdedd16a79530e42549c1ee3802c2a918
-    git: https://github.com/janiez/aws-lambda-haskell-runtime.git
+    hackage: aws-lambda-haskell-runtime-4.1.2
 snapshots:
 - completed:
     sha256: dad15e2ec0c09280a5c2e07190fb18710fc54472f029f34f861f686540824d81
