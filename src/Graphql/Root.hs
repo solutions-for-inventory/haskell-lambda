@@ -14,7 +14,7 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 
 
-module Graphql.Root (api, apiDoc) where
+module Graphql.Root (api, apiDoc, apiRaw) where
 
 import RIO
 import Data.Text (Text, pack)
@@ -54,6 +54,9 @@ rootResolver = RootResolver {
 -- | Compose the graphQL api
 api:: GQLRequest -> IO GQLResponse
 api request = interpreter rootResolver request
+
+apiRaw :: ByteString -> IO ByteString
+apiRaw = interpreter rootResolver
 
 proxy :: Proxy (RootResolver IO () Query Mutation Undefined)
 proxy = Proxy
