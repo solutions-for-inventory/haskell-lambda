@@ -14,5 +14,5 @@ main = do
     (pure ())
     id $ do
 --    (addAPIGatewayHandler "api-gateway" gatewayHandler)
-    (addStandaloneLambdaHandler "handler" gqlSchemaHandler)
+    (addStandaloneLambdaHandler "handler" gatewayHandler)
 
