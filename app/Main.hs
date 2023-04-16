@@ -1,8 +1,8 @@
 module Main where
 
 import RIO
-import Aws.Lambda
-import Lib (handler, gqlHandler, gqlSchemaHandler)
+import Aws.Lambda (runLambdaHaskellRuntime, addAPIGatewayHandler, defaultDispatcherOptions, addStandaloneLambdaHandler)
+import Lib (handler, gqlHandler, gqlSchemaHandler, gatewayHandler)
 --import Init (runAppDevel)
 --import Models (migrateDB)
 
@@ -12,5 +12,7 @@ main = do
   runLambdaHaskellRuntime
     defaultDispatcherOptions
     (pure ())
-    id
+    id $ do
+--    (addAPIGatewayHandler "api-gateway" gatewayHandler)
     (addStandaloneLambdaHandler "handler" gqlSchemaHandler)
+
