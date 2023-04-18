@@ -46,5 +46,5 @@ jobs:
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-west-2
           local-image: ${{ steps.docker-build-step.outputs.IMAGE_ID }}
-          image: ${{ steps.docker-build-step.outputs.IMAGE_ID }}:${{ steps.docker-build-step..outputs.VERSION }}
+          image: ${{ steps.docker-build-step.outputs.IMAGE_ID }}:${{ steps.docker-build-step.outputs.VERSION }}
 
