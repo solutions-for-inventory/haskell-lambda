@@ -41,8 +41,8 @@ jobs:
       - name: Push to AWS ECR
         id: ecr
         run: |
-          echo "IMAGE_ID=$IMAGE_ID"
-          echo "VERSION=$VERSION"
+          echo "IMAGE_ID=${{ steps.docker-build.outputs.IMAGE_ID }}"
+          echo "VERSION=${{ steps.docker-build.outputs.VERSION }}"
           aws ecr get-login-password | docker login --username AWS --password-stdin 794576056465.dkr.ecr.us-west-2.amazonaws.com
           docker tag ${{ steps.docker-build.outputs.IMAGE_ID }} 794576056465.dkr.ecr.us-west-2.amazonaws.com/${{ steps.docker-build.outputs.IMAGE_ID }}:${{ steps.docker-build.outputs.VERSION }}
           docker push 794576056465.dkr.ecr.us-west-2.amazonaws.com/${{ steps.docker-build.outputs.IMAGE_ID }}:${{ steps.docker-build.outputs.VERSION }}
