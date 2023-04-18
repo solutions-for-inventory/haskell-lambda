@@ -36,7 +36,7 @@ instance ToJSON Header where
     object [ fromText headerName .= value ]
 data ApiResponse = ApiResponse  { isBase64Encoded :: Bool, statusCode :: Int, body :: Text, headers :: [Header] } deriving (Generic, ToJSON)
 
-data ApiRequest = ApiRequest  { isBase64Encoded :: Bool, body :: Text, httpMethod :: Text } deriving (Generic, FromJSON, ToJSON)
+data ApiRequest = ApiRequest  { isBase64Encoded :: Maybe Bool, body :: Maybe Text, httpMethod :: Maybe Text } deriving (Generic, FromJSON, ToJSON)
 
 --instance FromJSON Person
 --instance ToJSON Person
