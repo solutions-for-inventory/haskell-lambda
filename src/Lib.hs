@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveGeneric  #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 module Lib where
 
@@ -27,9 +28,6 @@ data Person = Person
   , personAge :: Int
   } deriving (Generic, FromJSON, ToJSON)
 
-data SchemaGQL = SchemaGQL
-  { schema :: String
-  } deriving (Generic, FromJSON, ToJSON)
 
 
 data Header = Header {headerName :: Text, value :: Text} deriving (Generic)
@@ -37,6 +35,8 @@ instance ToJSON Header where
   toJSON (Header { headerName = headerName, value = value }) =
     object [ fromText headerName .= value ]
 data ApiResponse = ApiResponse  { isBase64Encoded :: Bool, statusCode :: Int, body :: Text, headers :: [Header] } deriving (Generic, ToJSON)
+
+data ApiRequest = ApiRequest  { isBase64Encoded :: Bool, body :: Text, httpMethod :: Text } deriving (Generic, FromJSON, ToJSON)
 
 --instance FromJSON Person
 --instance ToJSON Person
@@ -56,10 +56,10 @@ gqlHandler gqlRequest context = do
 gqlSchemaHandler :: () -> Context () -> IO (Either String String)
 gqlSchemaHandler _ context = pure $ Right $ unpack apiDoc
 
-gatewayHandler :: Text -> Context context -> IO (Either String ApiResponse)
+gatewayHandler :: ApiRequest -> Context context -> IO (Either String ApiResponse)
 gatewayHandler request context = do
                                 logger <- newStdoutLoggerSet defaultBufSize
-                                pushLogStr logger $ toLogStr $ request
+                                pushLogStr logger $ toLogStr $ encode request
                                 flushLogStr logger
                                 rmLoggerSet logger
                                 let schemaDoc = pack $ unpack apiDoc
