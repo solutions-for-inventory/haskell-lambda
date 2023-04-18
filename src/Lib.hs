@@ -56,7 +56,7 @@ gqlHandler gqlRequest context = do
 gqlSchemaHandler :: () -> Context () -> IO (Either String String)
 gqlSchemaHandler _ context = pure $ Right $ unpack apiDoc
 
-gatewayHandler :: ApiRequest -> Context context -> IO (Either String ApiResponse)
+gatewayHandler :: Value -> Context context -> IO (Either String ApiResponse)
 gatewayHandler request context = do
                                 logger <- newStdoutLoggerSet defaultBufSize
                                 pushLogStr logger $ toLogStr $ encode request
