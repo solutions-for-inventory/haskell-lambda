@@ -36,7 +36,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
           [[ "$VERSION" == "rel8"* ]] && VERSION=$BUILD_CUSTOM_NUMBER
           docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-#          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_OUTPUT
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_OUTPUT
 #          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
       - name: Push to AWS ECR
         id: ecr
@@ -45,6 +45,6 @@ jobs:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-west-2
-          local-image: ${{ env.IMAGE_ID }}
-          image: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          local-image: ${{ steps.docker-build-step.outputs.IMAGE_ID }}
+          image: ${{ steps.docker-build-step.outputs.IMAGE_ID }}:${{ steps.docker-build-step.outputs.VERSION }}
 
