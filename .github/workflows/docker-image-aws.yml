@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "rel8*" ]
 env:
-  IMAGE_NAME: hlambda-gql
+  IMAGE_NAME: janez/hlambda-gql
   VERSION: "1.0"
 jobs:
 
