@@ -36,7 +36,7 @@ jobs:
           [[ "$VERSION" == "rel8"* ]] && VERSION=$BUILD_CUSTOM_NUMBER
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker build . --file Dockerfile --tag $IMAGE_NAME:$VERSION --label "runnumber=${GITHUB_RUN_ID}"
+          docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
       - name: Push to AWS ECR
         id: ecr
         uses: jwalton/gh-ecr-push@v1
@@ -44,6 +44,6 @@ jobs:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-west-2
-          local-image: $IMAGE_NAME:$VERSION
-          image: $IMAGE_NAME:dev-${{ github.sha }}
+          local-image: $IMAGE_NAME
+          image: $IMAGE_NAME:$VERSION
 
