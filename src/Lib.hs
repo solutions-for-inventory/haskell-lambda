@@ -1,10 +1,12 @@
 {-# LANGUAGE DeriveGeneric  #-}
 {-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE OverloadedStrings     #-}
 
 module Lib where
 
 import Prelude (putStr)
-import RIO hiding (ByteString)
+--import RIO hiding (ByteString)
+import RIO
 import GHC.Generics
 import Data.Aeson
 import Aws.Lambda
@@ -14,6 +16,10 @@ import Data.Aeson.Key (fromText)
 import Data.Morpheus.Types (GQLRequest, GQLResponse)
 --import Data.ByteString.Lazy.Internal (ByteString)
 import Data.ByteString.Lazy.Char8 (unpack)
+import System.Log.FastLogger
+import System.IO
+import qualified Data.Text as T
+
 import Graphql.Root (api, apiDoc)
 
 data Person = Person
@@ -50,8 +56,12 @@ gqlHandler gqlRequest context = do
 gqlSchemaHandler :: () -> Context () -> IO (Either String String)
 gqlSchemaHandler _ context = pure $ Right $ unpack apiDoc
 
-gatewayHandler :: () -> Context () -> IO (Either String ApiResponse)
+gatewayHandler :: Text -> Context context -> IO (Either String ApiResponse)
 gatewayHandler request context = do
+                                logger <- newStdoutLoggerSet defaultBufSize
+                                pushLogStr logger $ toLogStr $ request
+                                flushLogStr logger
+                                rmLoggerSet logger
                                 let schemaDoc = pack $ unpack apiDoc
 --                                gqlResponse <- api $ fromJust $ apiGatewayRequestBody request
                                 let response = ApiResponse  { isBase64Encoded = False, statusCode = 200, body = schemaDoc, headers = [Header "Content-Type" "text/plain"]}

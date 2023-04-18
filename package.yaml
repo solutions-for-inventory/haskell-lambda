@@ -36,6 +36,7 @@ dependencies:
 - yaml
 - rel8
 - rio
+- fast-logger
 - cryptonite
 - uuid
 - memory
