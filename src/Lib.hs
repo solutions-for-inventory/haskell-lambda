@@ -59,7 +59,7 @@ gqlSchemaHandler _ context = pure $ Right $ unpack apiDoc
 gatewayHandler :: ApiRequest -> Context context -> IO (Either String ApiResponse)
 gatewayHandler request context = do
                                 logger <- newStdoutLoggerSet defaultBufSize
-                                pushLogStr logger $ toLogStr $ encode request
+                                pushLogStr logger $ (toLogStr $ encode request <>  "\n")
                                 flushLogStr logger
                                 rmLoggerSet logger
                                 let schemaDoc = pack $ unpack apiDoc
