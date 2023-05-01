@@ -3,7 +3,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 
-module Lib where
+module Lib (gqlHandler, gqlSchemaHandler, gatewayHandler, ApiRequest(..)) where
 
 import Prelude (putStr)
 --import RIO hiding (ByteString)
@@ -23,10 +23,10 @@ import qualified Data.Text as T
 
 import Graphql.Root (api, apiDoc)
 
-data Person = Person
-  { personName :: String
-  , personAge :: Int
-  } deriving (Generic, FromJSON, ToJSON)
+--data Person = Person
+--  { personName :: String
+--  , personAge :: Int
+--  } deriving (Generic, FromJSON, ToJSON)
 
 
 
@@ -40,13 +40,13 @@ data ApiRequest = ApiRequest  { isBase64Encoded :: Bool, body :: Maybe Text, htt
 
 --instance FromJSON Person
 --instance ToJSON Person
-
-handler :: Person -> Context () -> IO (Either String Person)
-handler person context =
-  if personAge person > 0 then
-    return (Right person)
-  else
-    return (Left "A person's age must be positive")
+--
+--handler :: Person -> Context () -> IO (Either String Person)
+--handler person context =
+--  if personAge person > 0 then
+--    return (Right person)
+--  else
+--    return (Left "A person's age must be positive")
 
 gqlHandler :: GQLRequest -> Context () -> IO (Either String GQLResponse)
 gqlHandler gqlRequest context = do

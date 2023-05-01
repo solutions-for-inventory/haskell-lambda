@@ -6,8 +6,7 @@ import Data.Aeson.Encode.Pretty (encodePretty)
 import Prelude (putStrLn)
 import Data.Maybe (fromJust)
 import Aws.Lambda
-import Lib (handler, gqlHandler, gqlSchemaHandler, gatewayHandler)
-import Lib (ApiRequest(..))
+import Lib
 import Config
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as C
