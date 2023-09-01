@@ -10,13 +10,14 @@ import Hasql.Transaction ( Transaction, condemn, statement, sql )
 import qualified Hasql.Session as Session
 import qualified Hasql.Transaction.Sessions as Hasql
 import Hasql.Statement (Statement)
+import Data.Time.Clock (secondsToDiffTime)
 
 import Config
 --import Conduit.App
 --import Environment
 
 loadPool :: ByteString -> Int -> IO Pool
-loadPool connectString poolSize = acquire poolSize (Just 1) connectString
+loadPool connectString poolSize = acquire poolSize (secondsToDiffTime 10) (secondsToDiffTime 30) connectString
 
 runTransactionWithConnection :: MonadIO m => Connection -> Transaction b -> m b
 runTransactionWithConnection conn transaction = do
