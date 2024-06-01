@@ -11,19 +11,22 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
 - base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
 - aws-lambda-haskell-runtime >= 4.1.1
-- morpheus-graphql    >= 0.19.0
-- morpheus-graphql-server >= 0.19.0
+- morpheus-graphql
+- morpheus-graphql-core
+- morpheus-graphql-server
 - persistent  >=2.8 && <3.0
 - esqueleto
 - persistent-postgresql >=2.13 && <3.0
 - persistent-template >=2.5 && <3.0
-- text >=0.11 && <2.0
+- text
+- rio
 - aeson
+- aeson-pretty
 - bytestring >=  0.10.4 && <0.12
 - time
 - random  >= 1.1
 - transformers
-#- fast-logger
+- fast-logger
 - monad-logger
 #- monad-metrics
 - mtl

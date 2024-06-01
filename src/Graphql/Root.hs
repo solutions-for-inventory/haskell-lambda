@@ -1,91 +1,71 @@
-{-# OPTIONS_GHC -w #-}
-{-# LANGUAGE DeriveGeneric         #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NamedFieldPuns        #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE ScopedTypeVariables   #-}
-{-# LANGUAGE TemplateHaskell       #-}
-{-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE DeriveAnyClass        #-}
-{-# LANGUAGE QuasiQuotes           #-}
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# OPTIONS_GHC -w #-}
 
+module Graphql.Root (api, apiDoc, apiRaw) where
 
-module Graphql.Root (api, apiDoc) where
-
-import           GHC.Generics
-import Data.Text (Text, pack)
 import Control.Monad.Trans.Class (lift)
-import Data.Proxy (Proxy(..))
-import           Data.Morpheus              (interpreter)
-import           Data.Morpheus.Document     ()
---import           Data.Morpheus.Types        (RootResolver (..), GQLType(..), GQLRequest, GQLResponse, ResolverQ, Undefined)
-import           Data.Morpheus.Types (RootResolver (..), Undefined (..), GQLRequest, GQLResponse, GQLType(..))
-import           Data.Morpheus.Document (gqlDocument)
-import           Data.Morpheus.Server (printSchema)
-import           Data.ByteString.Lazy.Internal (ByteString)
-import           Graphql.Utils ()
-import           Graphql.Admin.DataTypes
-import           Graphql.Admin.Person
+import Data.Bits (Bits (clearBit))
+import Data.Data (typeOf)
+import Data.Morpheus (interpreter)
+import Data.Morpheus.Document (gqlDocument)
+import Data.Morpheus.Server (printSchema)
+import Data.Morpheus.Types (GQLRequest, GQLResponse, GQLType (..), MUTATION, QUERY, ResolverQ, RootResolver (..), Undefined (..))
+import Data.Proxy (Proxy (..))
+import Data.Text (Text, pack)
+import Graphql.Types.Gql
+import RIO
 
-data QueryQL m = QueryQL { -- deity :: DeityArgs -> m Deity
---                            persons :: () -> Res () IO (Persons Res)
-                           persons :: () -> m (Persons m)
-                         } deriving (Generic, GQLType)
+resolveQuery =
+  Query
+  --                         categories = listCategoryResolver
+  --                       , units = listUnitResolver ()
+  --                       , inventories = inventoryResolver ()
+  --                       , items = itemResolver ()
+  --                       , inventoryItems = inventoryItemsResolver ()
+    {
+    }
 
---data Mutation m = Mutation { persons :: () -> MutRes () IO (Persons MutRes)
---                           } deriving (Generic, GQLType)
+{- | The mutation resolver
+resolveMutation::Mutation (MUTATION () Handler)
+-}
+resolveMutation =
+  Mutation
+  --                             saveCategory = saveCategoryResolver
+  --                           , saveUnit = saveUnitResolver
+  --                           , inventories = inventoryResolver ()
+  --                           , items = itemResolver ()
+  --                           , inventoryItems = inventoryItemsResolver ()
+    {
+    }
 
---data DeityArgs = DeityArgs { name :: Text, mythology :: Maybe Text } deriving (Generic)
-
--- | The query resolver
--- resolveQuery::QueryQL (Res () IO)
--- resolveQuery = QueryQL { --deity = resolveDeity
---                          persons = personResolver
---                        }
--- | The mutation resolver
---resolveMutation::Mutation (MutRes () IO)
---resolveMutation = Mutation {
---                             persons = personResolver
---                           }
-
-
--- BASE EXAMPLE
--- https://github.com/dnulnets/haccessability
---dbFetchDeity:: Text -> IO Deity
---dbFetchDeity name = do
---                     let userId = (toSqlKey 3)::User_Id
---                     deity <- runDB $ getEntity userId
---                     return $ Deity {fullName = "dummy", power = Just "Shapeshifting", tests = testsResolver}
-
---resolveDeity :: DeityArgs -> Res e IO Deity
---resolveDeity DeityArgs { name, mythology } = lift $ dbFetchDeity name
-
---testsResolver :: TestArg -> Res e IO NoDeity
---testsResolver TestArg {yourFullName } = pure NoDeity {noFullName = "Test no full am", nopower = Just "no power"}
-
-rootResolver :: RootResolver IO () QueryQL Undefined Undefined
-rootResolver = RootResolver { queryResolver = QueryQL {
-                                                       persons = personResolver
-                                                      }
---                            , mutationResolver = Undefined
---                            , subscriptionResolver = Undefined
-                            }
+rootResolver :: RootResolver IO () Query Mutation Undefined
+rootResolver =
+  RootResolver
+    { queryResolver = resolveQuery
+    , mutationResolver = resolveMutation
+    --                               , subscriptionResolver = Undefined
+    }
 
 -- | Compose the graphQL api
-api:: GQLRequest -> IO GQLResponse
+api :: GQLRequest -> IO GQLResponse
 api request = interpreter rootResolver request
 
---apiDoc :: Data.ByteString.Lazy.Internal.ByteString
---apiDoc :: Proxy (RootResolver IO () QueryQL Undefined Undefined)
---apiDoc = (printSchema Proxy) rootResolver
+apiRaw :: ByteString -> IO ByteString
+apiRaw = interpreter rootResolver
 
-type APIResolver e m = RootResolver m e QueryQL Undefined Undefined
-
---proxy :: Proxy (APIResolver () IO)
-proxy :: Proxy (RootResolver IO () QueryQL Undefined Undefined)
+proxy :: Proxy (RootResolver IO () Query Mutation Undefined)
 proxy = Proxy
 
 apiDoc = printSchema $ proxy

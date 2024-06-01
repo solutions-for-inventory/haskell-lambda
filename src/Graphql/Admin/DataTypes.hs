@@ -33,7 +33,7 @@ data Person = Person { personId :: Int
 
 data Persons o = Persons {
                            person :: EntityIdArg -> o Person
-                         } deriving (Generic, GQLType)
+                         } deriving (Generic)
 
 
 --data Query m = Query

@@ -2,6 +2,7 @@
 #port:           "_env:APP_PORT:4200"
 
 #persistence configs
+env: "_env:ENV:local"
 
 db:
   user:     "_env:DB_USER:dev"
