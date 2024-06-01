@@ -1,18 +1,19 @@
 {-# LANGUAGE DeriveGeneric  #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Config (getDBConfig, DBConfig(..)) where
+module Config (getDBConfig, getAppConfig, AppConfig(..), DBConfig(..)) where
 
+import RIO
 import GHC.Generics
---import Data.Aeson
 import Data.Yaml (decodeFile, FromJSON(..), ToJSON(..))
 import Data.Yaml.Config (loadYamlSettings, useEnv)
-import Database.Persist.Postgresql (withPostgresqlPool, ConnectionString)
 import Text.Printf (printf)
 import Data.Text (pack)
 import Data.Text.Encoding (encodeUtf8)
 
-data AppConfig = AppConfig { db :: DBConfig
+data AppConfig = AppConfig {
+                            env :: String,
+                            db :: DBConfig
                            } deriving (Generic, Read, Show)
 
 data DBConfig = DBConfig { user :: String
