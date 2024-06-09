@@ -19,7 +19,7 @@ ENTRYPOINT sh
 
 #build deployable docker image
 FROM public.ecr.aws/lambda/provided:al2023 as deploy
-RUN yum install -y postgresql-devel
+RUN dnf install -y postgresql-devel
 ARG EXECUTABLE_NAME
 ARG OUTPUT_DIR
 
