@@ -64,7 +64,7 @@ gatewayHandler request context = do
                                 rmLoggerSet logger
                                 let schemaDoc = pack $ unpack apiDoc
 --                                gqlResponse <- api $ fromJust $ apiGatewayRequestBody request
-                                let response = ApiResponse  { isBase64Encoded = False, statusCode = 200, body = schemaDoc, headers = [Header "Content-Type" "application/json"]}
+                                let response = ApiResponse  { isBase64Encoded = False, statusCode = 200, body = schemaDoc, headers = [Header "Content-Type" "text/plain"]}
                                 return $ Right $ response
 
 --gatewayHandler :: ApiGatewayRequest GQLRequest -> Context context -> IO (Either (ApiGatewayResponse error) (ApiGatewayResponse GQLResponse))
