@@ -22,7 +22,7 @@ dependencies:
 - rio
 - aeson
 - aeson-pretty
-- bytestring >=  0.10.4 && <0.12
+- bytestring >=  0.11.5 && <0.13
 - time
 - random  >= 1.1
 - transformers
