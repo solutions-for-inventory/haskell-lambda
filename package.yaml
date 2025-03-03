@@ -3,8 +3,8 @@ version:             0.1.0
 github:              "githubuser/haskell-lambda"
 license:             BSD3
 author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2021 Author name here"
+maintainer:          "aniez.jorge@gmail.com"
+copyright:           "2025 Author name here"
 
 description:         Please see the README on GitHub at <https://github.com/githubuser/haskell-lambda#readme>
 
@@ -36,6 +36,11 @@ dependencies:
 - resourcet
 - monad-control
 - yaml
+- wai
+- wai-extra
+- warp
+- http-types
+- scotty
 
 library:
   source-dirs: src

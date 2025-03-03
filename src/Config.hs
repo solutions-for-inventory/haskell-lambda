@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric  #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 module Config (getDBConfig, getAppConfig, AppConfig(..), DBConfig(..)) where
 
@@ -12,7 +13,9 @@ import Data.Text (pack)
 import Data.Text.Encoding (encodeUtf8)
 
 data AppConfig = AppConfig {
+                            appType :: String,
                             env :: String,
+                            port :: Int,
                             db :: DBConfig
                            } deriving (Generic, Read, Show)
 

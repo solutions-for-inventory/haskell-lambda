@@ -2,7 +2,9 @@
 #port:           "_env:APP_PORT:4200"
 
 #persistence configs
-env: "_env:ENV:local"
+env:  "_env:ENV:local"
+appType: "_env:APP_TYPE:web"
+port: "_env:APP_PORT:8080"
 
 db:
   user:     "_env:DB_USER:dev"

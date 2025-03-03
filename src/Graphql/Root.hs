@@ -24,6 +24,7 @@ import Data.Morpheus.Server (printSchema)
 import Data.Morpheus.Types (GQLRequest, GQLResponse, GQLType (..), MUTATION, QUERY, ResolverQ, RootResolver (..), Undefined (..))
 import Data.Proxy (Proxy (..))
 import Data.Text (Text, pack)
+import qualified Data.ByteString.Lazy as B
 import Graphql.Types.Gql
 import RIO
 
@@ -68,4 +69,5 @@ apiRaw = interpreter rootResolver
 proxy :: Proxy (RootResolver IO () Query Mutation Undefined)
 proxy = Proxy
 
+apiDoc :: B.ByteString
 apiDoc = printSchema $ proxy
