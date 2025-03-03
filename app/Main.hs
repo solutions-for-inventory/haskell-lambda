@@ -45,6 +45,9 @@ execWebServer AppConfig{..} = scotty port $ do
     let inputPayload = decode body :: Maybe GQLRequest
     apiResponse <- liftIO $ api $ fromJust inputPayload
     json apiResponse
+  notFound $ do
+    status status404
+    text "404 - Not Found"
 
 --dummyContext ref = Context {
 --        functionName = "functionName",
